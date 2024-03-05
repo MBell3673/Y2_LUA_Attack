@@ -35,6 +35,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="laser.h" />
+    <ClInclude Include="LuaHelper.h" />
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />

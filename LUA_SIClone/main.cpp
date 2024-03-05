@@ -513,7 +513,7 @@ void display_message(const char* message)
 
 void game_start_message()
 {
-	for (int i = 1; i <= 10; i++)
+	for (int i = 1; i <= 5; i++)
 	{
 		al_clear_to_color(al_map_rgb(125, 125, 125)); // colour entire display with rgb colour
 		al_draw_textf(Game_manager->message(), al_map_rgb(255, 0, 0), 300, 300, 0, "GET READY");
@@ -524,7 +524,7 @@ void game_start_message()
 		al_flip_display();
 		al_rest(0.25);
 	}
-	for (int i = 5; i >= 0; i--)//DISPLAY THE GAME START MESSAGE *maybe in a method or function?*
+	for (int i = 3; i >= 0; i--)//DISPLAY THE GAME START MESSAGE *maybe in a method or function?*
 	{
 		al_clear_to_color(al_map_rgb(125, 125, 125)); // colour entire display with rgb colour
 		al_draw_textf(Game_manager->message(), al_map_rgb(0, 255, 0), 300, 300, 0, "START IN: %d", i);

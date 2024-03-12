@@ -15,6 +15,7 @@ Description:main
 #include "Ufo.h"
 #include "laser.h"
 #include "Mothership.h"
+#include "LuaHelper.h"
 
 using namespace std;
 //globals ***maybe add to a class along with the functions below??***
@@ -23,6 +24,8 @@ Player* the_ship;
 Game* Game_manager;
 int x, y;//used for ufo array coordinates
 
+
+lua_State* L = luaL_newstate();
 int randomNumber();//random number generator
 void destroyUFOs();
 void spawnUFOs();
@@ -33,13 +36,25 @@ int main()
 {
 	srand(time(NULL));//Sets the random seed for the whole game
 
+	luaL_openlibs(L);
+	if (!LuaOK(L, luaL_dofile(L, "Script.lua")))
+	{
+		assert(false);
+	}
+
 	// DECLARE variables
 	bool is_right = true;//move direction check	
 	int ufo_counter = 0;//how many ufos destroyed (this tells the game when to start a new level)
-	int level_colour = 0;//for setting the background colour for each level and also defines the max number of levels
-	int Level_number = 1;//used for displaying the level number
+	int level_colour = LuaGetInt(L, "colour");//for setting the background colour for each level and also defines the max number of levels
+	int Level_number = LuaGetInt(L, "level");//used for displaying the level number
 	int laser_generator;//chance of ufo firing
 	int Mothership_chance;//chance of mothership appearing
+	Vector2 pos;
+	bool showCredits = LuaGetBool(L, "credits");
+	float testFloat = LuaGetFloat(L, "floatyPoint");
+	double testDouble = LuaGetDouble(L, "doublePoint");
+
+	pos.FromLua(L, "startpos");
 
 	Game_manager = new Game();
 	Input* Input_manager = new Input();
@@ -48,8 +63,10 @@ int main()
 	laser* laser_limit[10]{};
 	laser* Ufo_lasers[10]{};
 
-	the_ship = new Player(500, 625, 5, "assets/player0.bmp");//create the player ship
-	the_ship->addFrame("assets/player1.bmp");
+	//the_ship = new Player(500, 625, 5, "assets/player0.bmp");//create the player ship
+	the_ship = new Player(pos.x, pos.y, LuaGetInt(L, "lives"), LuaGetStr(L, "playerSprite"));//create the player ship
+	//the_ship->addFrame("assets/player1.bmp");
+	the_ship->addFrame(LuaGetStr(L, "playerSprite"));
 	
 	game_start_message();//DISPLAY THE GAME START MESSAGE 
 	
@@ -330,8 +347,13 @@ int main()
 					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 0, 0, 0, "lives: %d", the_ship->getLives());
 					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 200, 0, 0, "Score: %d", the_ship->getScore());
 					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 750, 0, 0, "level: %d", Level_number);
-					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 0, 670, 0, "Game design and programming : Philip Alassad");
-					al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 600, 670, 0, "Assets and artwork : James Dorrington");
+					if (showCredits)
+					{
+						al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 0, 670, 0, "Game design and programming : Philip Alassad");
+						al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 600, 670, 0, "Assets and artwork : James Dorrington");
+					}
+					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 300, 640, 0, "Float: %f", testFloat);
+					al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 300, 670, 0, "Double: %f", testDouble);
 
 					the_ship->draw();//draw the ship
 					al_flip_display(); // show what has just been drawn
@@ -447,6 +469,12 @@ int main()
 	//////////////////////////////////////////	
 	delete the_ship;//delete the player ship
 	the_ship = nullptr;
+
+	if (L)
+	{
+		lua_close(L);
+	}
+
 	return 0;
 }
 

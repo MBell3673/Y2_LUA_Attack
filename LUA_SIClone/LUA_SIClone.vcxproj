@@ -23,6 +23,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="laser.cpp" />
+    <ClCompile Include="LuaHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -43,7 +44,7 @@
     <ClInclude Include="Ufo.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="E:\Desktop\LUA_Test\LUA_SIClone\LUA_SIClone\LuaScript.lua" />
+    <None Include="Script.lua" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

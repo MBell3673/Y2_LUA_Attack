@@ -48,6 +48,9 @@
     <ClCompile Include="Ufo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LuaHelper.cpp">
+      <Filter>Lua scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barrier.h">
@@ -82,7 +85,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="E:\Desktop\LUA_Test\LUA_SIClone\LUA_SIClone\LuaScript.lua">
+    <None Include="Script.lua">
       <Filter>Lua scripts</Filter>
     </None>
   </ItemGroup>

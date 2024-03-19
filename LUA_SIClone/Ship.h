@@ -17,6 +17,8 @@ Description: Header file for Ship class
 #include "Game.h"
 #include <vector>
 
+#include "LuaHelper.h"
+
 using namespace std;
 
 class Ship 
@@ -40,7 +42,7 @@ public:
 	int getX();
 	int getY();
 	void left();
-	void right();
+	void right() {};
 	void down();
 	void draw(void);
 	void addFrame(string filename);

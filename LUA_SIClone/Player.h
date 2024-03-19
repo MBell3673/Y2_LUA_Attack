@@ -15,12 +15,15 @@ Description: Header file for Player class
 
 using namespace std;
 
+struct lua_State;
+
 class Player: public Ship
 {
 private:
 	//members
 	int m_lives;
 	int m_score;
+	lua_State* L = nullptr;
 
 public:
 	//constructor
@@ -30,6 +33,7 @@ public:
 	//methods
 	void reduceLives();
 	void increaseLives();
+	void right();
 	void setScore(int score);
 	int getLives();
 	int getScore();

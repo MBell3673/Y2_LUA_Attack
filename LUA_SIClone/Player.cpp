@@ -17,11 +17,28 @@ Player::Player(float xPos, float yPos, int lives, string filename)
 {
 	m_lives = lives;
 	m_score = 0;
+
+	L = luaL_newstate();
+
+	// Open main libraries for scripts
+	luaL_openlibs(L);
+
+	// Load and parse the Lua file
+	if (!LuaOK(L, luaL_dofile(L, "Script.lua")))
+	{
+		assert(false);
+	}
 }
 
 Player::~Player()
 {
 	//al_destroy_bitmap(m_Ship_image);
+	lua_close(L);
+}
+
+void Player::right(void)
+{
+	CallMoveRight(L, "right", m_xpos, m_current_frame);
 }
 
 //Methods

@@ -35,6 +35,12 @@ float LuaGetFloat(lua_State* L, const std::string& name);
 // Get a double from Lua
 double LuaGetDouble(lua_State* L, const std::string& name);
 
+// Call LUA function "rng"; returns a random number
+int CallRNG(lua_State* L, const std::string& fName = "rng");
+
+// Call LUA function "right"; moves the player ship right
+void CallMoveRight(lua_State* L, const std::string& fName, float& x, float& frame);
+
 
 struct Vector2
 {

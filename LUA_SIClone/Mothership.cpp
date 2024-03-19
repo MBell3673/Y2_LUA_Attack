@@ -15,7 +15,7 @@ Description: Source file for Mothership class
 Mothership::Mothership(float xPos, float yPos, string filename)
 	:Ship(xPos, yPos, filename)
 {	
-	m_lives = 10;
+	m_lives = 3;
 	m_xpos = xPos;
 	m_ypos = yPos;
 }

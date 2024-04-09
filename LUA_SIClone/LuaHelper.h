@@ -41,6 +41,9 @@ int CallRNG(lua_State* L, const std::string& fName = "rng");
 // Call LUA function "right"; moves the player ship right
 void CallMoveRight(lua_State* L, const std::string& fName, float& x, float& frame);
 
+// Call a void C function from LUA
+void CallVoidVoidCFunc(lua_State* L, const std::string& fname);
+
 
 struct Vector2
 {

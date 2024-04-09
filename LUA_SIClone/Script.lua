@@ -2,8 +2,8 @@
 
 math.randomseed(os.time())
 
-colour = 100
-level = 25
+colour = 200
+level = 50
 lives = 10
 playerSprite = "assets/ufoph.bmp"
 
@@ -40,4 +40,18 @@ function right(x, currentFrame)
 	
 	return x, currentFrame
 end
-	
+
+
+
+function callNextLvlMessage()
+	display_message("Next wave...", 1)
+end
+
+function callWinMessage()
+	display_message("Victory!!!", 1)
+end
+
+
+function callStartMessage()
+	game_start_message("WE'RE UNDER ATTACK!", 5, "Invaders in %d...", 3)
+end

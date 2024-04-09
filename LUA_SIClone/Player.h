@@ -12,6 +12,7 @@ Description: Header file for Player class
 
 //includes go here
 #include "Ship.h"
+#include "LuaHelper.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ private:
 	int m_lives;
 	int m_score;
 	lua_State* L = nullptr;
+	void setScore(int score);
 
 public:
 	//constructor
@@ -31,10 +33,10 @@ public:
 	~Player(void);
 
 	//methods
+	void Init(Dispatcher& disp);
 	void reduceLives();
 	void increaseLives();
 	void right();
-	void setScore(int score);
 	int getLives();
 	int getScore();
 	void kill();

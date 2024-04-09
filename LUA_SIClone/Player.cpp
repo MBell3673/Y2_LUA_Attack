@@ -36,6 +36,13 @@ Player::~Player()
 	lua_close(L);
 }
 
+void Player::Init(Dispatcher& disp)
+{
+	// Tell the dispatcher we have a new function for LUA
+	Dispatcher::Command::voidintfunc f{[this](int score) {return setScore(score); } };
+	disp.Register("setScore", Dispatcher::Command{f});
+}
+
 void Player::right(void)
 {
 	CallMoveRight(L, "right", m_xpos, m_current_frame);

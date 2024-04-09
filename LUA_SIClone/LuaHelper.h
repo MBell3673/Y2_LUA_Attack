@@ -67,3 +67,37 @@ struct Vector2
 		lua_pop(L, 1);
 	}
 };
+
+
+// A middle man between C++ and LUA. Register class member functions so
+// your LUA script can call them.
+class Dispatcher
+{
+public:
+// Capture game functions here
+	struct Command
+	{
+		typedef std::function<void(int)> voidintfunc; // A function which returns void and takes an int
+		voidintfunc voidintfunct;
+		// Add any other function signatures here
+	};
+
+	// Call once at the start
+	void Init(lua_State* L)
+	{
+		lua_register(L, "CDispatcher", LuaCall);
+	}
+
+	// Register game functions
+	void Register(const std::string& name, Command cmd)
+	{
+		assert(library.find(name) == library.end());
+		library[name] = cmd;
+	}
+
+	// LUA calls this, then the data gets dispatched to that named function
+	// LUA is old-school C based, so it cannot call class member fnctions without help
+	static int LuaCall(lua_State* L);
+private:
+	static std::map<std::string, Command> library; // This is where game functions are stored
+};

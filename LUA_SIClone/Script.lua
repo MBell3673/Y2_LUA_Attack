@@ -2,8 +2,8 @@
 
 math.randomseed(os.time())
 
-colour = 200
-level = 50
+colour = 100
+level = 25
 lives = 10
 playerSprite = "assets/ufoph.bmp"
 
@@ -54,4 +54,8 @@ end
 
 function callStartMessage()
 	game_start_message("WE'RE UNDER ATTACK!", 5, "Invaders in %d...", 3)
+end
+
+function setPlayerScore()
+	CDispatcher("setScore", 5000)
 end

@@ -42,4 +42,5 @@ public:
 	void kill();
 	void reset_lives();
 	void reset_score();
+	void setFrame(int frame);
 };

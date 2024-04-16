@@ -45,7 +45,7 @@ void Player::Init(Dispatcher& disp)
 
 void Player::right(void)
 {
-	CallMoveRight(L, "right", m_xpos, m_current_frame);
+	CallMoveRight(L, "right", m_xpos, m_direction_flag);
 }
 
 //Methods
@@ -87,4 +87,9 @@ void Player::reset_lives()
 void Player::reset_score()
 {
 	m_score = 0;
+}
+
+void Player::setFrame(int frame)
+{
+	m_current_frame = frame;
 }

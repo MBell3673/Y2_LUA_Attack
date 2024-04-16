@@ -69,7 +69,7 @@ int main()
 
 	//the_ship = new Player(500, 625, 5, "assets/player0.bmp");//create the player ship
 	the_ship = new Player(pos.x, pos.y, LuaGetInt(L, "lives"), LuaGetStr(L, "playerSprite"));//create the player ship
-	the_ship->addFrame(LuaGetStr(L, "playerSprite"));
+	the_ship->addFrame(LuaGetStr(L, "playerSprRight"));
 
 	Dispatcher disp;
 	disp.Init(L);
@@ -109,10 +109,16 @@ int main()
 					if (Input_manager->key_is_pressed(KEY_D))//moves ship right
 					{
 						the_ship->right();
+						the_ship->setFrame(1);
 					}
 					if (Input_manager->key_is_pressed(KEY_A))//moves ship left
 					{
 						the_ship->left();
+						the_ship->setFrame(1);
+					}
+					if (!Input_manager->key_is_pressed(KEY_D) && !Input_manager->key_is_pressed(KEY_A)) //ship does not move
+					{
+						the_ship->setFrame(0);
 					}
 					if (Input_manager->key_is_pressed(KEY_SPACE))//fires
 					{

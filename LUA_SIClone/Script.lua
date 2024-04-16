@@ -5,7 +5,9 @@ math.randomseed(os.time())
 colour = 100
 level = 25
 lives = 10
-playerSprite = "assets/ufoph.bmp"
+playerSprite = "assets/Ufoph.bmp"
+playerSprRight = "assets/UfophRight.bmp"
+mothershipSpeed = 3
 
 -- A simple Vector2 object
 startpos = { x = 625, y = 625}
@@ -25,20 +27,16 @@ function rng()
 end
 
 
-function right(x, currentFrame)
+function right(x, directionFlag)
 	x = x + 5
+	directionFlag = 1
 
 	if (x >= 910)
 	then
 		x = 910
 	end
-
-	if (currentFrame > 1.9)
-	then
-		currentFrame = 0
-	end
 	
-	return x, currentFrame
+	return x, directionFlag
 end
 
 

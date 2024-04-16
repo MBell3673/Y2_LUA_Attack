@@ -134,6 +134,10 @@ int Dispatcher::LuaCall(lua_State* L)
 		cmd.voidintfunct(param);
 		lua_pop(L, 1);
 	}
+	else if (cmd.voidvoidfunct)
+	{
+		lua_pop(L, 1);
+	}
 	else // Add any more cases here
 	{
 		assert(false);

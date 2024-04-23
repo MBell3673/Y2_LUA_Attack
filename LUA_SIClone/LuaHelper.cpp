@@ -87,7 +87,7 @@ int CallRNG(lua_State* L, const string& fName)
 	return result;
 }
 
-void CallMoveRight(lua_State* L, const string& fName, float& x, float& frame)
+void CallMoveRight(lua_State* L, const string& fName, float& x, float& dirflag)
 {
 	lua_getglobal(L, fName.c_str());
 	if (!lua_isfunction(L, -1))
@@ -95,13 +95,13 @@ void CallMoveRight(lua_State* L, const string& fName, float& x, float& frame)
 		assert(false);
 	}
 	lua_pushnumber(L, x);
-	lua_pushnumber(L, frame);
+	lua_pushnumber(L, dirflag);
 	if (!LuaOK(L, lua_pcall(L, 2, 2, 0)))	// Calls a function in protected mode (state, num of parameters, num of returns, errorfunc)
 	{
 		assert(false);
 	}
 	x = (float)lua_tonumber(L, -2);
-	frame = (float)lua_tonumber(L, -1);
+	dirflag = (float)lua_tonumber(L, -1);
 	lua_pop(L, 2);
 }
 
@@ -118,6 +118,40 @@ void CallVoidVoidCFunc(lua_State* L, const string& fname)
 	}
 }
 
+void CallVoidIntCFunc(lua_State* L, const string& fname, int i)
+{
+	lua_getglobal(L, fname.c_str());
+	if (!lua_isfunction(L, -1))
+	{
+		assert(false);
+	}
+	lua_pushinteger(L, i);
+	if (!LuaOK(L, lua_pcall(L, 1, 0, 0)))
+	{
+		assert(false);
+	}
+}
+
+void CallMoveUFO(lua_State* L, const string& fName, float& x, float& frame, float& counter, float& level, bool dirflag)
+{
+	lua_getglobal(L, fName.c_str());
+	if (!lua_isfunction(L, -1))
+	{
+		assert(false);
+	}
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, frame);
+	lua_pushnumber(L, counter);
+	lua_pushnumber(L, level);
+	lua_pushboolean(L, dirflag);
+	if (!LuaOK(L, lua_pcall(L, 5, 2, 0)))
+	{
+		assert(false);
+	}
+	x = (float)lua_tonumber(L, -2);
+	frame = (float)lua_tonumber(L, -1);
+	lua_pop(L, 2);
+}
 
 
 std::map<string, Dispatcher::Command> Dispatcher::library;

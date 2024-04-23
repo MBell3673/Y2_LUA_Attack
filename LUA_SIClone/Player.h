@@ -12,7 +12,6 @@ Description: Header file for Player class
 
 //includes go here
 #include "Ship.h"
-#include "LuaHelper.h"
 
 using namespace std;
 

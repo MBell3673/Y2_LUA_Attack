@@ -44,6 +44,12 @@ void CallMoveRight(lua_State* L, const std::string& fName, float& x, float& fram
 // Call a void C function from LUA
 void CallVoidVoidCFunc(lua_State* L, const std::string& fname);
 
+// Call a C function from LUA (takes an int and returns void)
+void CallVoidIntCFunc(lua_State* L, const std::string& fname, int i);
+
+// Call LUA function "moveUFO"; moves the UFOs in their designated direction
+void CallMoveUFO(lua_State* L, const std::string& fName, float& x, float& frame, float& counter, float& level, bool dirflag);
+
 
 struct Vector2
 {

@@ -214,7 +214,7 @@ int main()
 										delete DynamicUfoArray[y][x];
 										DynamicUfoArray[y][x] = nullptr;
 										//the_ship->setScore(100);
-										CallVoidVoidCFunc(L, "setPlayerScore");
+										CallVoidIntCFunc(L, "setPlayerScore", 1000);
 										delete laser_limit[i];
 										laser_limit[i] = nullptr;
 									}
@@ -228,15 +228,14 @@ int main()
 							{																	
 								the_mothership->reduceLives();
 								//the_ship->setScore(20);
+								CallVoidIntCFunc(L, "setPlayerScore", 200);
 								if (the_mothership->getLives() <= 0)
 								{
 									the_ship->increaseLives();
 									//the_ship->setScore(300);
-									CallVoidVoidCFunc(L, "setPlayerScore");
+									CallVoidIntCFunc(L, "setPlayerScore", 3000);
 									delete the_mothership;
 									the_mothership = nullptr;
-									//the_ship->setScore(100);
-									CallVoidVoidCFunc(L, "setPlayerScore");
 								}	
 								delete laser_limit[i];
 								laser_limit[i] = nullptr;
@@ -534,7 +533,7 @@ void spawnUFOs()
 	{
 		for (x = 0; x < 10; x++)
 		{
-			DynamicUfoArray[y][x] = new Ufo((x * 85) + 85, (y * 50) + 70, "assets/Ufo1.bmp");
+			DynamicUfoArray[y][x] = new Ufo((x * 85) + 85, (y * 50) + 70, "assets/Ufo1.bmp", L);
 			DynamicUfoArray[y][x]->addFrame("assets/Ufo2.bmp");
 		}
 	}

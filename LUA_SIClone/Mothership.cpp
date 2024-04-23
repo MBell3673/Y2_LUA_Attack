@@ -12,12 +12,13 @@ Description: Source file for Mothership class
 #include <stdio.h>
 
 //Constructor
-Mothership::Mothership(float xPos, float yPos, string filename)
+Mothership::Mothership(float xPos, float yPos, string filename, lua_State* lua)
 	:Ship(xPos, yPos, filename)
 {	
 	m_lives = 3;
 	m_xpos = xPos;
 	m_ypos = yPos;
+	L = lua;
 }
 
 Mothership::~Mothership()
@@ -32,7 +33,7 @@ void Mothership::left()
 
 void Mothership::right()
 {
-	m_xpos = m_xpos + 3 ;
+	m_xpos = m_xpos + LuaGetFloat(L, "mothershipSpeed");
 }
 
 void Mothership::reduceLives()

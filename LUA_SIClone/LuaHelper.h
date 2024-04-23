@@ -79,7 +79,7 @@ public:
 	{
 		typedef std::function<void(int)> voidintfunc; // A function which returns void and takes an int
 		voidintfunc voidintfunct;
-		typedef std::function<void(void)> voidvoidfunc; // A function which returns void and takes an int
+		typedef std::function<void(void)> voidvoidfunc; // A function which returns void and takes a void
 		voidvoidfunc voidvoidfunct;
 		// Add any other function signatures here
 	};

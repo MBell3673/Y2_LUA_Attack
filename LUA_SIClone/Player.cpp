@@ -39,8 +39,12 @@ Player::~Player()
 void Player::Init(Dispatcher& disp)
 {
 	// Tell the dispatcher we have a new function for LUA
-	Dispatcher::Command::voidintfunc f{[this](int score) {return setScore(score); } };
-	disp.Register("setScore", Dispatcher::Command{f});
+	Dispatcher::Command::voidintfunc vif{[this](int score) {return setScore(score); } };
+	disp.Register("setScore", Dispatcher::Command{vif});
+
+	// Tell the dispatcher we have a new (void void) function for LUA
+	Dispatcher::Command::voidvoidfunc vvf{[this]() {return kill(); } };
+	disp.Register("kill", Dispatcher::Command{NULL, vvf});
 }
 
 void Player::right(void)
@@ -76,7 +80,7 @@ void Player::setScore(int score)
 
 void Player::kill()
 {
-	m_lives = 0;
+	m_lives = -1;
 }
 
 void Player::reset_lives()

@@ -26,6 +26,7 @@ private:
 	int m_score;
 	lua_State* L = nullptr;
 	void setScore(int score);
+	void kill();
 
 public:
 	//constructor
@@ -39,7 +40,6 @@ public:
 	void right();
 	int getLives();
 	int getScore();
-	void kill();
 	void reset_lives();
 	void reset_score();
 	void setFrame(int frame);

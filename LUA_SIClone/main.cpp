@@ -69,7 +69,7 @@ int main()
 
 	//the_ship = new Player(500, 625, 5, "assets/player0.bmp");//create the player ship
 	the_ship = new Player(pos.x, pos.y, LuaGetInt(L, "lives"), LuaGetStr(L, "playerSprite"));//create the player ship
-	the_ship->addFrame(LuaGetStr(L, "playerSprRight"));
+	the_ship->addFrame(LuaGetStr(L, "playerSprTurn"));
 
 	Dispatcher disp;
 	disp.Init(L);
@@ -162,7 +162,7 @@ int main()
 						Mothership_chance = CallRNG(L);
 						if (Mothership_chance >= 250 && Mothership_chance <= 260)
 						{
-							the_mothership = new Mothership(0, 20, "assets/Mothership.bmp");
+							the_mothership = new Mothership(0, 20, "assets/Mothership.bmp", L);
 							the_mothership->addFrame("assets/Mothership.bmp");
 						}
 					}
@@ -284,7 +284,8 @@ int main()
 						{
 							if (DynamicUfoArray[y][x] != NULL && DynamicUfoArray[y][x]->Ufo::getY() >= 575)
 							{								
-								the_ship->kill();//don't let the ufos get to the bottom !!!
+								//the_ship->kill();//don't let the ufos get to the bottom !!!
+								CallVoidVoidCFunc(L, "killPlayer");
 								for (y = 0; y < 5; y++)
 								{
 									for (x = 0; x < 10; x++)
@@ -375,7 +376,7 @@ int main()
 					the_ship->draw();//draw the ship
 					al_flip_display(); // show what has just been drawn
 					al_rest(0.01); // slow things down a bit
-					if (the_ship->getLives() == 0)
+					if (the_ship->getLives() <= 0)
 					{						
 						for (int i = 10; i >= 0; i--)//DISPLAY THE GAME OVER MESSAGE *maybe in a method or function?*
 						{
@@ -402,8 +403,8 @@ int main()
 							{
 								the_ship->reset_score();
 								ufo_counter = 0;//how many ufos destroyed (this tells the game when to start a new level)
-								level_colour = 0;//for setting the background colour for each level and also defines the max number of levels
-								Level_number = 1;
+								level_colour = LuaGetInt(L, "colour");//for setting the background colour for each level and also defines the max number of levels
+								Level_number = LuaGetInt(L, "level");
 								the_ship->reset_lives();
 								CallVoidVoidCFunc(L, "callStartMessage");
 								//game_start_message();//DISPLAY THE GAME START MESSAGE 

@@ -6,8 +6,8 @@ colour = 100
 level = 25
 lives = 10
 playerSprite = "assets/Ufoph.bmp"
-playerSprRight = "assets/UfophRight.bmp"
-mothershipSpeed = 3
+playerSprTurn = "assets/UfophRight.bmp"
+mothershipSpeed = 2.0
 
 -- A simple Vector2 object
 startpos = { x = 625, y = 625}
@@ -56,4 +56,8 @@ end
 
 function setPlayerScore()
 	CDispatcher("setScore", 5000)
+end
+
+function killPlayer()
+	CDispatcher("kill")
 end

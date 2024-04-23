@@ -21,10 +21,11 @@ class Mothership : public Ship
 private:
 	//members
 	int m_lives;
-	
+	lua_State* L = nullptr;
+
 public:
 	//constructor
-	Mothership(float xPos, float yPos, string filename);
+	Mothership(float xPos, float yPos, string filename, lua_State* lua);
 	~Mothership(void);
 
 	//methods

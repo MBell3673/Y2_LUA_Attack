@@ -3,7 +3,7 @@ Space invaders game
 Author:		Philip Alassad
 Filename:	main.cpp
 Date:		14/10/2015
-Last Updated:	25/10/2015
+Last Updated:	23/04/2024 (Matthew Bell)
 
 Description:main
 */
@@ -26,10 +26,8 @@ int x, y;//used for ufo array coordinates
 
 
 lua_State* L = luaL_newstate();
-int randomNumber();//random number generator
 void destroyUFOs();
 void spawnUFOs();
-//void display_message(const char* message, int time);
 int display_message(lua_State* L);
 int game_start_message(lua_State* L);
 
@@ -54,7 +52,9 @@ int main()
 	int laser_generator;//chance of ufo firing
 	int Mothership_chance;//chance of mothership appearing
 	Vector2 pos;
-	bool showCredits = LuaGetBool(L, "credits");
+	bool showCredits = LuaGetBool(L, "credits"); // show the credits at the bottom of the screen
+
+	// These are really just test variables to make sure I know how to get Lua floats and doubles
 	float testFloat = LuaGetFloat(L, "floatyPoint");
 	double testDouble = LuaGetDouble(L, "doublePoint");
 
@@ -67,16 +67,14 @@ int main()
 	laser* laser_limit[10]{};
 	laser* Ufo_lasers[10]{};
 
-	//the_ship = new Player(500, 625, 5, "assets/player0.bmp");//create the player ship
 	the_ship = new Player(pos.x, pos.y, LuaGetInt(L, "lives"), LuaGetStr(L, "playerSprite"));//create the player ship
-	the_ship->addFrame(LuaGetStr(L, "playerSprTurn"));
+	the_ship->addFrame(LuaGetStr(L, "playerSprTurn")); // add a new frame to the player ship to show turning
 
 	Dispatcher disp;
 	disp.Init(L);
-	the_ship->Init(disp);
+	the_ship->Init(disp); // used to register setScore() (void int) and kill() (void void) to the dispatcher
 	
-	CallVoidVoidCFunc(L, "callStartMessage");
-	//game_start_message();//DISPLAY THE GAME START MESSAGE 
+	CallVoidVoidCFunc(L, "callStartMessage"); //DISPLAY THE GAME START MESSAGE
 	
 	while (the_ship->getLives() > 0)// keep going until the ship is dead
 	{			
@@ -213,7 +211,6 @@ int main()
 										ufo_counter++;
 										delete DynamicUfoArray[y][x];
 										DynamicUfoArray[y][x] = nullptr;
-										//the_ship->setScore(100);
 										CallVoidIntCFunc(L, "setPlayerScore", 1000);
 										delete laser_limit[i];
 										laser_limit[i] = nullptr;
@@ -227,12 +224,10 @@ int main()
 								&& laser_limit[i]->getX() + 4 >= the_mothership->getX() && laser_limit[i]->getX() + 4 <= the_mothership->getX() + 103)  
 							{																	
 								the_mothership->reduceLives();
-								//the_ship->setScore(20);
 								CallVoidIntCFunc(L, "setPlayerScore", 200);
 								if (the_mothership->getLives() <= 0)
 								{
 									the_ship->increaseLives();
-									//the_ship->setScore(300);
 									CallVoidIntCFunc(L, "setPlayerScore", 3000);
 									delete the_mothership;
 									the_mothership = nullptr;
@@ -283,8 +278,7 @@ int main()
 						{
 							if (DynamicUfoArray[y][x] != NULL && DynamicUfoArray[y][x]->Ufo::getY() >= 575)
 							{								
-								//the_ship->kill();//don't let the ufos get to the bottom !!!
-								CallVoidVoidCFunc(L, "killPlayer");
+								CallVoidVoidCFunc(L, "killPlayer"); //don't let the ufos get to the bottom !!!
 								for (y = 0; y < 5; y++)
 								{
 									for (x = 0; x < 10; x++)
@@ -369,8 +363,8 @@ int main()
 						al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 0, 670, 0, "Game design and programming : Philip Alassad");
 						al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 600, 670, 0, "Assets and artwork : James Dorrington");
 					}
-					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 300, 640, 0, "Float: %f", testFloat);
-					al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 300, 670, 0, "Double: %f", testDouble);
+					al_draw_textf(Game_manager->small_message(), al_map_rgb(100, 250, 50), 0, 610, 0, "Float: %f", testFloat);
+					al_draw_textf(Game_manager->small_message(), al_map_rgb(225, 100, 225), 0, 640, 0, "Double: %f", testDouble);
 
 					the_ship->draw();//draw the ship
 					al_flip_display(); // show what has just been drawn
@@ -405,8 +399,7 @@ int main()
 								level_colour = LuaGetInt(L, "colour");//for setting the background colour for each level and also defines the max number of levels
 								Level_number = LuaGetInt(L, "level");
 								the_ship->reset_lives();
-								CallVoidVoidCFunc(L, "callStartMessage");
-								//game_start_message();//DISPLAY THE GAME START MESSAGE 
+								CallVoidVoidCFunc(L, "callStartMessage"); //DISPLAY THE GAME START MESSAGE 
 								for (int i = 0; i < 10; i++)//set all lasers to null
 								{
 									laser_limit[i] = NULL;
@@ -436,13 +429,12 @@ int main()
 					{
 						if (level_colour == 255)
 						{
-							//display_message("You Win!!!");
+							CallVoidVoidCFunc(L, "callWinMessage");
 						}
 						else
 						if (level_colour != 255)
 						{
 							CallVoidVoidCFunc(L, "callNextLvlMessage");
-							//display_message("Next Level...");
 							al_flush_event_queue(Input_manager->Get_event());//clears the queue of events
 							for (int i = 0; i < 10; i++)//delete the lasers
 							{
@@ -497,14 +489,6 @@ int main()
 	return 0;
 }
 
-int randomNumber()//random number generator
-{
-	//Gives the remainder of a division of the random seed by the maximum range  
-	//(this will always give an answer between 0 and Max-1)
-	//Then adds one, to return a value in the range from 1 to Max (instead of 0 to Max-1)
-	return (rand() % 18000) + 1;
-}
-
 void destroyUFOs()
 {
 	if (DynamicUfoArray)
@@ -543,7 +527,7 @@ int display_message(lua_State* L)
 {
 	const char* message = lua_tostring(L, 1);
 	int time = lua_tointeger(L, 2);
-	for (int i = 1; i <= time; i++)//DISPLAY THE GAME OVER MESSAGE *maybe in a method or function?*
+	for (int i = 1; i <= time; i++)//DISPLAY THE MESSAGE
 	{
 		al_clear_to_color(al_map_rgb(125, 125, 125)); // colour entire display with rgb colour
 		al_draw_textf(Game_manager->message(), al_map_rgb(100, 250, 50), 300, 300, 0, message);
@@ -579,7 +563,7 @@ int game_start_message(lua_State* L)
 		al_flip_display();
 		al_rest(0.25);
 	}
-	for (int i = countTime; i >= 0; i--)//DISPLAY THE GAME START MESSAGE *maybe in a method or function?*
+	for (int i = countTime; i >= 0; i--)//DISPLAY THE GAME START MESSAGE
 	{
 		al_clear_to_color(al_map_rgb(125, 125, 125)); // colour entire display with rgb colour
 		al_draw_textf(Game_manager->message(), al_map_rgb(0, 255, 0), 300, 300, 0, countMessage, i);

@@ -1,2 +1,9 @@
-﻿  main.cpp
-  LUA_SIClone.vcxproj -> F:\Object Oriented C++ Programming\LUA Project\Y2_LUA_Attack\Debug\LUA_SIClone.exe
+﻿  LuaHelper.cpp
+  main.cpp
+  Mothership.cpp
+  Player.cpp
+  Scene.cpp
+  Ship.cpp
+  Ufo.cpp
+  Generating Code...
+  LUA_SIClone.vcxproj -> C:\Users\CG Admin\Documents\Computer_Science_for_Games\Object Oriented C++ Programming\LUA Project\Y2_LUA_Attack\Debug\LUA_SIClone.exe

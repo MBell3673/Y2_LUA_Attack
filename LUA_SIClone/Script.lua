@@ -9,7 +9,7 @@ level = 25
 -- the player starts the game with this many lives
 lives = 10
 -- the speed that the mothership will travel when spawned
-mothershipSpeed = 2.0
+mothershipSpeed = 2.5
 
 -- sprites for the player to use
 playerSprite = "assets/Ufoph.bmp"
@@ -17,19 +17,17 @@ playerSprTurn = "assets/UfophRight.bmp"
 
 
 
--- A simple Vector2 object
+-- A simple table with 2 elements, can be translated into a Vector2 struct that we made in C
 startpos = { x = 625, y = 625}
 
--- bool
-credits = false
+-- test for Lua bool, toggles showing credits at the bottom of the screen
+credits = true
 
--- float
+-- both of these numbers were just to test that I can get both float and double from Lua
 floatyPoint = 26.8
-
--- double
 doublePoint = 53.6
 
--- handles random events like mothership spawns and ufo shooting
+-- generates a random number - handles random events like mothership spawns and ufo shooting
 function rng()
 	return math.random(1, 10000)
 end
@@ -89,7 +87,7 @@ function setPlayerScore(score)
 	CDispatcher("setScore", score)
 end
 
--- player dies - instant game over
+-- player dies - instant game over (called when ufos reach the bottom)
 function killPlayer()
 	CDispatcher("kill")
 end

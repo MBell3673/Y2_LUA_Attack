@@ -17,6 +17,7 @@ Description: Header file for Ship class
 #include "Game.h"
 #include <vector>
 
+ // for passing lua_State* - handy to be included here as Player/UFO/Mothership all derive from Ship
 #include "LuaHelper.h"
 
 using namespace std;

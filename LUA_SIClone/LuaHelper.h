@@ -41,16 +41,16 @@ int CallRNG(lua_State* L, const std::string& fName = "rng");
 // Call LUA function "right"; moves the player ship right
 void CallMoveRight(lua_State* L, const std::string& fName, float& x, float& frame);
 
-// Call a void C function from LUA
+// Call a C function from LUA that takes no parameters and returns void
 void CallVoidVoidCFunc(lua_State* L, const std::string& fname);
 
 // Call a C function from LUA (takes an int and returns void)
 void CallVoidIntCFunc(lua_State* L, const std::string& fname, int i);
 
-// Call LUA function "moveUFO"; moves the UFOs in their designated direction
+// Call LUA function "moveUFO"; moves the UFOs horizontally across the screen
 void CallMoveUFO(lua_State* L, const std::string& fName, float& x, float& frame, float& counter, float& level, bool dirflag);
 
-
+// An example of a struct that can be implemented into Lua using tables
 struct Vector2
 {
 	int x, y;
@@ -87,7 +87,6 @@ public:
 		voidintfunc voidintfunct;
 		typedef std::function<void(void)> voidvoidfunc; // A function which returns void and takes a void
 		voidvoidfunc voidvoidfunct;
-		// Add any other function signatures here
 	};
 
 	// Call once at the start

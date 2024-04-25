@@ -3,7 +3,7 @@ Space invaders game
 Author:		Philip Alassad
 Filename:	Player.cpp
 Date:		14/10/2015
-Last Updated:	__/__/____
+Last Updated:	23/04/2024 (Matthew Bell)
 
 Description: Source file for Player class
 */
@@ -32,13 +32,12 @@ Player::Player(float xPos, float yPos, int lives, string filename)
 
 Player::~Player()
 {
-	//al_destroy_bitmap(m_Ship_image);
 	lua_close(L);
 }
 
 void Player::Init(Dispatcher& disp)
 {
-	// Tell the dispatcher we have a new function for LUA
+	// Tell the dispatcher we have a new (void int) function for LUA
 	Dispatcher::Command::voidintfunc vif{[this](int score) {return setScore(score); } };
 	disp.Register("setScore", Dispatcher::Command{vif});
 
